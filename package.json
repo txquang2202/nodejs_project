@@ -1,10 +1,18 @@
 {
   "name": "express-simple-starter",
+  "type": "module",
   "private": true,
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "axios": "^1.5.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.5.2",
+    "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.22.19"
   }
 }

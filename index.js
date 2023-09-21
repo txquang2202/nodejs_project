@@ -1,13 +1,15 @@
-const express = require('express');
-const { resolve } = require('path');
+import env from "dotenv";
+import express from "express";
 
 const app = express();
-const port = 3010;
 
-app.use(express.static('static'));
+env.config();
+const port = process.env.PORT;
 
-app.get('/', (req, res) => {
-  res.sendFile(resolve(__dirname, 'pages/index.html'));
+app.use(express.static("static"));
+
+app.get("/api/v1/trueLove", (req, res) => {
+  res.send("duy yeu ý");
 });
 
 app.listen(port, () => {
