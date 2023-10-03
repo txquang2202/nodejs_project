@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const mongoURL =
-  process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/nodejs_project";
+  process.env.DATABASE_URL ||
+  "mongodb+srv://quang234:quang234@cluster0.im4tmby.mongodb.net/Users";
 
 async function connect() {
   try {
