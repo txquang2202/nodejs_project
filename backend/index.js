@@ -18,10 +18,13 @@ app.use("/assets", express.static("../frontend/assets"));
 connect();
 //view engine
 app.set("view engine", "ejs");
-app.set("views", "../frontend/views");
+app.set("views", "../frontend");
 
 //api routes
 app.get("/", (req, res) => {
+  res.render("index");
+});
+app.get("/login", (req, res) => {
   res.render("loginScreen");
 });
 app.get("/home", authenticateJWT, (req, res) => {
