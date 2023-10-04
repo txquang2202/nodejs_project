@@ -27,6 +27,11 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("loginScreen");
 });
+//signUp
+app.get("/signUp", (req, res) => {
+  res.render("signUp");
+});
+app.post("/signUp", createUser);
 app.get("/home", authenticateJWT, (req, res) => {
   res.render("home");
 });
