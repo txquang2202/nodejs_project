@@ -9,18 +9,16 @@ const secretKey = process.env.SECRET_KEY || "your_secret_key";
 const app = express();
 
 const authenticateJWT = (req, res, next) => {
-  const token = loginValid(req, res);
-  if (token) {
-    jwt.verify(token, secretKey, (err, user) => {
-      if (err) {
-        return res.sendStatus(403); // Forbidden
-      }
-      req.user = user;
-      console.log("passs");
+  try {
+    var token = req.cookies.token;
+    var verify = jwt.verify(token, process.env.SECRET_KEY || "mysecretkey");
+    console.log(verify);
+    if (verify) {
       next();
-    });
-  } else {
-    res.sendStatus(401); // Unauthorized
+    }
+  } catch (error) {
+    res.json("Bạn đéo có quyền truy cập");
   }
 };
+
 export { authenticateJWT };

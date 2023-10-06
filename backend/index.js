@@ -3,16 +3,15 @@ import express from "express";
 import env from "dotenv";
 import connect from "./config/db.js";
 import { createUser, loginValid } from "./api/userAPI.js";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
 import { authenticateJWT } from "./middleware/jwt.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 //environment
 env.config();
 const port = process.env.PORT || 3000;
-const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use("/assets", express.static("../frontend/assets"));
 //connect to database
 connect();
@@ -24,6 +23,9 @@ app.set("views", "../frontend");
 app.get("/", (req, res) => {
   res.render("index");
 });
+app.get("/home", authenticateJWT, (req, res, next) => {
+  res.render("home");
+});
 app.get("/login", (req, res) => {
   res.render("loginScreen");
 });
@@ -32,9 +34,6 @@ app.get("/signUp", (req, res) => {
   res.render("signUp");
 });
 app.post("/signUp", createUser);
-app.get("/home", authenticateJWT, (req, res) => {
-  res.render("home");
-});
 app.post("/create-user", authenticateJWT, createUser);
 app.post("/login", loginValid);
 

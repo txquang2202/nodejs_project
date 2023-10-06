@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
       img: "Example",
     });
     await newUser.save();
-    res.render("home");
+    res.json({ message: "Đăng ký thành công" });
   } catch (error) {
     console.error("Lỗi khi thêm người dùng:", error);
     res.status(500).send("Đã xảy ra lỗi.");
@@ -33,7 +33,12 @@ const loginValid = async (req, res) => {
     }
     const secretKey = process.env.SECRET_KEY;
     const token = jwt.sign(user.toJSON(), secretKey, { expiresIn: 604800 });
-    res.json({ token });
+    // Đặt cookie với mã JWT
+    res.cookie("token", token, { maxAge: 604800000, httpOnly: true });
+    res.json({
+      message: "Đăng nhập thành công",
+      token,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Lỗi server." });
